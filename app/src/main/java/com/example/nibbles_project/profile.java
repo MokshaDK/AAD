@@ -3,7 +3,10 @@ package com.example.nibbles_project;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -11,6 +14,10 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import java.util.Calendar;
@@ -46,6 +53,11 @@ public class profile extends AppCompatActivity {
 
         // Load saved profile data when the activity is opened
         loadProfileData();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+        }
 
         // Save data when the save button is clicked
         saveButton.setOnClickListener(v -> saveProfileData());
@@ -80,14 +92,10 @@ public class profile extends AppCompatActivity {
 
         // Display a confirmation message
         Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
-        scheduleDailyNotification(hour, minute);
 
         // Navigate to MainActivity
         Intent intent = new Intent(profile.this, MainActivity.class);
         startActivity(intent);
-
-        // Optionally finish this activity to prevent going back
-        finish();
     }
 
     private void loadProfileData() {
@@ -117,26 +125,5 @@ public class profile extends AppCompatActivity {
                 break;
             }
         }
-    }
-
-    private void scheduleDailyNotification(int hour, int minute) {
-        // Create an Intent to trigger the notification
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Set up the AlarmManager
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, 0);
-
-        // If the time has already passed for today, schedule it for tomorrow
-        if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        // Schedule the alarm to repeat daily
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }

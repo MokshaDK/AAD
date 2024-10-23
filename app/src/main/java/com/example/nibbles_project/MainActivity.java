@@ -1,6 +1,7 @@
 package com.example.nibbles_project;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -8,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,10 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.content.Context;
+import android.widget.Button;
+
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
-
+    private static final int REQUEST_CODE = 100;
     private SensorManager sensorManager;
     private Sensor stepCounterSensor;
     private TextView stepCountText;
@@ -46,6 +50,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         loadProfileDataAndCalculateBMI();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE);
+            }
+        }
     }
 
     private void initializeStepCounter() {

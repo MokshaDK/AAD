@@ -32,14 +32,8 @@ public class login extends AppCompatActivity {
                 // Here you should add validation logic and check if the login details are correct
                 String username = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
-                if (validateLogin(username, password)) {
-                    Toast.makeText(login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    // Navigate to the home screen or wherever
-                    Intent intent = new Intent(login.this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(login.this, "Invalid login. Please try again.", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(login.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
