@@ -1,0 +1,124 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Weight Input -->
+    <TextView
+        android:id="@+id/labelWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight (kg)"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/inputWeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Enter weight in kilograms"
+        app:layout_constraintTop_toBottomOf="@id/labelWeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Height Input -->
+    <TextView
+        android:id="@+id/labelHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Height (m)"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/inputWeight"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/inputHeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Enter height in meters"
+        app:layout_constraintTop_toBottomOf="@id/labelHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Age Input -->
+    <TextView
+        android:id="@+id/labelAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/inputHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/inputAge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Enter age"
+        app:layout_constraintTop_toBottomOf="@id/labelAge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Gender Input -->
+    <TextView
+        android:id="@+id/labelGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/inputAge"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <Spinner
+        android:id="@+id/inputGender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/gender_array"
+        app:layout_constraintTop_toBottomOf="@id/labelGender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/inputGender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Set a time for a daily reminder to track your health"
+        />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        app:layout_constraintTop_toBottomOf="@id/timerTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintTop_toBottomOf="@id/timePicker"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
