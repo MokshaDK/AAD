@@ -4,24 +4,21 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.content.Context;
-import android.widget.Button;
-
-
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private static final int REQUEST_CODE = 100;
@@ -29,10 +26,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor stepCounterSensor;
     private TextView stepCountText;
     private ProgressBar stepProgressBar;
+    private Button updateProfileButton;
     private int totalSteps = 0;
     private static final String SHARED_PREFS = "userPrefs";
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_HEIGHT = "height";
+
+    private static final String CHANNEL_ID = "channel_id";
+    private static final int NOTIFICATION_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE);
             }
         }
+
+        updateProfileButton = findViewById(R.id.updateProfile);
+
+        // Set OnClickListener for the button
+        updateProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to start the profile activity
+                Intent intent = new Intent(MainActivity.this, profile.class);
+                startActivity(intent); // Start the profile activity
+            }
+        });
     }
 
     private void initializeStepCounter() {
@@ -97,18 +110,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
         initializeStepCounter();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initializeStepCounter();
-            } else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private void loadProfileDataAndCalculateBMI() {

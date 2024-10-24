@@ -13,6 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/nicotineExposure"
         android:text="Daily Tracking"
+        android:textSize="24sp"
         />
     <EditText
         android:id="@+id/nicotineExposure"
@@ -42,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/waterIntake"
-        android:hint="Enter today's calory intake in kcal"
+        android:hint="Enter today's calorie intake in kcal"
         />
     <EditText
         android:id="@+id/waterIntake"
@@ -106,7 +107,8 @@
         app:layout_constraintTop_toBottomOf="@+id/stepProgressBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bmiProgressBar"/>
+        app:layout_constraintBottom_toTopOf="@id/bmiProgressBar"
+        android:textSize="24sp"/>
         />
     <ProgressBar
         android:id="@+id/bmiProgressBar"
@@ -119,7 +121,17 @@
     app:layout_constraintTop_toBottomOf="@+id/bmiTextView"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/updateProfile"
     />
+    <Button
+        android:id="@+id/updateProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/bmiProgressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Update Profile"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

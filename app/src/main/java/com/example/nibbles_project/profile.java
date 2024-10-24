@@ -3,40 +3,27 @@ package com.example.nibbles_project;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.Manifest;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import java.util.Calendar;
 
 public class profile extends AppCompatActivity {
-
-    private EditText inputWeight, inputHeight, inputAge;
-    private Spinner inputGender;
-    private Switch inputNicotine;
-    private Button saveButton;
-    private TimePicker timePicker;
-
     // Define SharedPreferences name and keys
     private static final String SHARED_PREFS = "userPrefs";
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_HEIGHT = "height";
     private static final String KEY_AGE = "age";
     private static final String KEY_GENDER = "gender";
+    private static final String KEY_DOCTOR_NUMBER = "doctor_number"; // Key for doctor's number
 
+    private EditText inputWeight, inputHeight, inputAge, doctorNumber;
+    private Spinner inputGender;
+    private Button saveButton, callButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +35,20 @@ public class profile extends AppCompatActivity {
         inputHeight = findViewById(R.id.inputHeight);
         inputAge = findViewById(R.id.inputAge);
         inputGender = findViewById(R.id.inputGender);
+        doctorNumber = findViewById(R.id.doctorNumber); // Initialize doctor number field
         saveButton = findViewById(R.id.saveButton);
-        timePicker = findViewById(R.id.timePicker);
+        callButton = findViewById(R.id.callButton);
 
         // Load saved profile data when the activity is opened
         loadProfileData();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+
+        // Set OnClickListener on the call button
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makePhoneCall();
             }
-        }
+        });
 
         // Save data when the save button is clicked
         saveButton.setOnClickListener(v -> saveProfileData());
@@ -68,15 +59,8 @@ public class profile extends AppCompatActivity {
         String height = inputHeight.getText().toString();
         String age = inputAge.getText().toString();
         String gender = inputGender.getSelectedItem().toString();
-        int hour;
-        int minute;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            hour = timePicker.getHour();
-            minute = timePicker.getMinute();
-        } else {
-            hour = timePicker.getCurrentHour(); // For devices running on older versions
-            minute = timePicker.getCurrentMinute();
-        }
+        String number = doctorNumber.getText().toString(); // Get the doctor number
+
         // Save data to SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -85,10 +69,8 @@ public class profile extends AppCompatActivity {
         editor.putString(KEY_HEIGHT, height);
         editor.putString(KEY_AGE, age);
         editor.putString(KEY_GENDER, gender);
-        editor.putInt("notification_hour", hour);
-        editor.putInt("notification_minute", minute);
-
-        editor.apply();  // Apply the changes
+        editor.putString(KEY_DOCTOR_NUMBER, number); // Save the doctor number
+        editor.apply();
 
         // Display a confirmation message
         Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
@@ -106,24 +88,39 @@ public class profile extends AppCompatActivity {
         String height = sharedPreferences.getString(KEY_HEIGHT, "");
         String age = sharedPreferences.getString(KEY_AGE, "");
         String gender = sharedPreferences.getString(KEY_GENDER, "");
+        String number = sharedPreferences.getString(KEY_DOCTOR_NUMBER, ""); // Load the doctor number
 
         // Set the loaded data to input fields
         inputWeight.setText(weight);
         inputHeight.setText(height);
         inputAge.setText(age);
+        doctorNumber.setText(number); // Set the loaded doctor number
 
-        // Set the spinner to the correct gender (you may need a helper function for this)
+        // Set the spinner to the correct gender
         setSpinnerToValue(inputGender, gender);
-
     }
 
-    // Helper function to set the Spinner's value (gender) based on the saved data
     private void setSpinnerToValue(Spinner spinner, String value) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).toString().equals(value)) {
                 spinner.setSelection(i);
                 break;
             }
+        }
+    }
+
+    private void makePhoneCall() {
+        String number = doctorNumber.getText().toString();
+
+        // Check if the number is not empty
+        if (number.trim().length() > 0) {
+            // Create an Intent to dial the number (opens the dialer)
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + number));
+            startActivity(intent);
+        } else {
+            // Show a message if the number is empty
+            Toast.makeText(profile.this, "Enter a valid phone number", Toast.LENGTH_SHORT).show();
         }
     }
 }
