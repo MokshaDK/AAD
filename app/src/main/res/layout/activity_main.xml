@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="ExtraText">
     <TextView
         android:id="@+id/dailyText"
         android:layout_width="match_parent"
@@ -13,48 +15,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/nicotineExposure"
         android:text="Daily Tracking"
-        android:textSize="24sp"
-        />
+        android:textSize="24sp" />
+
     <EditText
         android:id="@+id/nicotineExposure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dailyText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/proteinIntake"
         android:hint="Enter today's nicotine exposure/consumption"
-        />
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@id/proteinIntake"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dailyText" />
+
     <EditText
         android:id="@+id/proteinIntake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/nicotineExposure"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/caloriesIntake"
         android:hint="Enter today's protein intake in grams"
-        />
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@id/caloriesIntake"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nicotineExposure" />
+
     <EditText
         android:id="@+id/caloriesIntake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/caloriesIntake"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/waterIntake"
         android:hint="Enter today's calorie intake in kcal"
-        />
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@id/waterIntake"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/caloriesIntake" />
+
     <EditText
         android:id="@+id/waterIntake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/caloriesIntake"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/dailySave"
         android:hint="Enter today's water intake in glasses"
-        />
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@id/dailySave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/caloriesIntake" />
     <Button
         android:id="@+id/dailySave"
         android:layout_width="wrap_content"
@@ -130,8 +135,17 @@
         app:layout_constraintTop_toBottomOf="@id/bmiProgressBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nutritionGuidelines"
         android:text="Update Profile"
         />
-
+    <Button
+        android:id="@+id/nutritionGuidelines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/updateProfile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Nutrition Guidelines"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

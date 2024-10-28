@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView stepCountText;
     private ProgressBar stepProgressBar;
     private Button updateProfileButton;
+    private Button nutritionGuidelinesButton;
     private int totalSteps = 0;
     private static final String SHARED_PREFS = "userPrefs";
     private static final String KEY_WEIGHT = "weight";
@@ -58,6 +59,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         updateProfileButton = findViewById(R.id.updateProfile);
+        nutritionGuidelinesButton = findViewById(R.id.nutritionGuidelines);
+        nutritionGuidelinesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, VideosActivity.class);
+                startActivity(intent); // Start the profile activity
+            }
+        });
 
         // Set OnClickListener for the button
         updateProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(intent); // Start the profile activity
             }
         });
+
     }
 
     private void initializeStepCounter() {

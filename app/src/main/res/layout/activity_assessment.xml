@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AssessmentActivity">
+
+    <LinearLayout
+        android:id="@+id/assessmentForm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter Health Markers"
+            android:textSize="18sp"
+            android:padding="16dp" />
+
+        <EditText
+            android:id="@+id/nicotineInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nicotine Intake" />
+
+        <EditText
+            android:id="@+id/proteinInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Protein Intake (grams)" />
+
+        <EditText
+            android:id="@+id/calorieInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Calorie Intake (kcal)" />
+
+        <EditText
+            android:id="@+id/waterInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Water Intake (glasses)" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
