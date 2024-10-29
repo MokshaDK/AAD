@@ -1,63 +1,54 @@
 package com.example.nibbles_project;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-import java.util.Calendar;
+import android.content.Intent;
+
 
 public class AssessmentActivity extends AppCompatActivity {
-    private EditText nicotineInput, proteinInput, calorieInput, waterInput;
-    private Button saveButton;
-    private AppDatabase db;
-    private static final String SHARED_PREFS = "userPrefs";
-    private static final String KEY_LAST_ASSESSMENT_DATE = "lastAssessmentDate";
+
+    private EditText satisfactionInput, improvementInput, progressInput;
+    private Button submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment);
 
-        nicotineInput = findViewById(R.id.nicotineInput);
-        proteinInput = findViewById(R.id.proteinInput);
-        calorieInput = findViewById(R.id.calorieInput);
-        waterInput = findViewById(R.id.waterInput);
-        saveButton = findViewById(R.id.saveButton);
+        satisfactionInput = findViewById(R.id.satisfaction_input);
+        improvementInput = findViewById(R.id.improvement_input);
+        progressInput = findViewById(R.id.progress_input);
+        submitButton = findViewById(R.id.submit_button);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "intake-database").build();
-
-        saveButton.setOnClickListener(v -> saveData());
-    }
-    private void updateLastAssessmentDate() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(KEY_LAST_ASSESSMENT_DATE, Calendar.getInstance().getTimeInMillis());
-        editor.apply();
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitAssessment();
+            }
+        });
     }
 
-    private void saveData() {
-        int nicotine = Integer.parseInt(nicotineInput.getText().toString());
-        int protein = Integer.parseInt(proteinInput.getText().toString());
-        int calorie = Integer.parseInt(calorieInput.getText().toString());
-        int water = Integer.parseInt(waterInput.getText().toString());
+    private void submitAssessment() {
+        String satisfaction = satisfactionInput.getText().toString();
+        String improvements = improvementInput.getText().toString();
+        String progress = progressInput.getText().toString();
 
-        Intake intake = new Intake();
-        intake.nicotine = nicotine;
-        intake.protein = protein;
-        intake.calorie = calorie;
-        intake.water = water;
+        // Here you could save this data to Firestore or handle it as needed
+        if (satisfaction.isEmpty() || improvements.isEmpty() || progress.isEmpty()) {
+            Toast.makeText(AssessmentActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(AssessmentActivity.this, "Assessment submitted!", Toast.LENGTH_SHORT).show();
+            // Clear inputs or navigate back if needed
+            // Create an intent to navigate back to MainActivity
+            Intent intent = new Intent(AssessmentActivity.this, MainActivity.class);
+            startActivity(intent);
 
-        new Thread(() -> {
-            db.intakeDao().insert(intake);
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
-                updateLastAssessmentDate();
-            });
-        }).start();
+            // Finish the current activity to remove it from the back stack
+            finish();
+        }
     }
 }

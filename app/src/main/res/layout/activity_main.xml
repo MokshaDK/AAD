@@ -15,51 +15,55 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/nicotineExposure"
         android:text="Daily Tracking"
-        android:textSize="24sp" />
-
+        android:textSize="24sp"
+        />
     <EditText
         android:id="@+id/nicotineExposure"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter today's nicotine exposure/consumption"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@id/proteinIntake"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dailyText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dailyText" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/proteinIntake"
+        android:hint="Enter today's nicotine exposure/consumption"
+        android:inputType="numberDecimal"
+        />
     <EditText
         android:id="@+id/proteinIntake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter today's protein intake in grams"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@id/caloriesIntake"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nicotineExposure"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nicotineExposure" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/caloriesIntake"
+        android:hint="Enter today's protein intake in grams"
+        android:inputType="numberDecimal"
+        />
     <EditText
         android:id="@+id/caloriesIntake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter today's calorie intake in kcal"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@id/waterIntake"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/caloriesIntake"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/caloriesIntake" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/waterIntake"
+        android:hint="Enter today's calorie intake in kcal"
+        android:inputType="numberDecimal"
+        />
     <EditText
         android:id="@+id/waterIntake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter today's water intake in glasses"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@id/dailySave"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/caloriesIntake"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/caloriesIntake" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dailySave"
+        android:hint="Enter today's water intake in glasses"
+        android:inputType="numberDecimal"
+        />
     <Button
         android:id="@+id/dailySave"
         android:layout_width="wrap_content"
@@ -145,7 +149,18 @@
         app:layout_constraintTop_toBottomOf="@id/updateProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/intakeSummaryTextView"
         android:text="Nutrition Guidelines"
         />
+    <TextView
+        android:id="@+id/intakeSummaryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/nutritionGuidelines"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Daily Intake Summary will appear here"
+        android:visibility="gone" /> <!-- Initially hidden -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

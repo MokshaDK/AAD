@@ -14,30 +14,36 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class profile extends AppCompatActivity {
     // Define SharedPreferences name and keys
-    private static final String SHARED_PREFS = "userPrefs";
+    private static final String SHARED_PREFS = "NibblesPrefs";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_HEIGHT = "height";
     private static final String KEY_AGE = "age";
     private static final String KEY_GENDER = "gender";
-    private static final String KEY_DOCTOR_NUMBER = "doctor_number"; // Key for doctor's number
+    private static final String KEY_DOCTOR_NUMBER = "doctor_number";
 
     private EditText inputWeight, inputHeight, inputAge, doctorNumber;
     private Spinner inputGender;
-    private Button saveButton, callButton;
+    private Button saveButton, callButton, logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // Initialize input fields and button
+        // Initialize input fields and buttons
         inputWeight = findViewById(R.id.inputWeight);
         inputHeight = findViewById(R.id.inputHeight);
         inputAge = findViewById(R.id.inputAge);
         inputGender = findViewById(R.id.inputGender);
-        doctorNumber = findViewById(R.id.doctorNumber); // Initialize doctor number field
+        doctorNumber = findViewById(R.id.doctorNumber);
         saveButton = findViewById(R.id.saveButton);
         callButton = findViewById(R.id.callButton);
+        logoutButton = findViewById(R.id.logoutButton); // Initialize the logout button
+
+        // Check if user is logged in
+        checkLoginStatus();
 
         // Load saved profile data when the activity is opened
         loadProfileData();
@@ -52,6 +58,26 @@ public class profile extends AppCompatActivity {
 
         // Save data when the save button is clicked
         saveButton.setOnClickListener(v -> saveProfileData());
+
+        // Set OnClickListener on the logout button
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+    }
+
+    private void checkLoginStatus() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean(KEY_IS_LOGGED_IN, false);
+
+        if (!isLoggedIn) {
+            // If not logged in, redirect to login page
+            Intent intent = new Intent(profile.this, login.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void saveProfileData() {
@@ -59,7 +85,7 @@ public class profile extends AppCompatActivity {
         String height = inputHeight.getText().toString();
         String age = inputAge.getText().toString();
         String gender = inputGender.getSelectedItem().toString();
-        String number = doctorNumber.getText().toString(); // Get the doctor number
+        String number = doctorNumber.getText().toString();
 
         // Save data to SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
@@ -69,7 +95,7 @@ public class profile extends AppCompatActivity {
         editor.putString(KEY_HEIGHT, height);
         editor.putString(KEY_AGE, age);
         editor.putString(KEY_GENDER, gender);
-        editor.putString(KEY_DOCTOR_NUMBER, number); // Save the doctor number
+        editor.putString(KEY_DOCTOR_NUMBER, number);
         editor.apply();
 
         // Display a confirmation message
@@ -88,13 +114,13 @@ public class profile extends AppCompatActivity {
         String height = sharedPreferences.getString(KEY_HEIGHT, "");
         String age = sharedPreferences.getString(KEY_AGE, "");
         String gender = sharedPreferences.getString(KEY_GENDER, "");
-        String number = sharedPreferences.getString(KEY_DOCTOR_NUMBER, ""); // Load the doctor number
+        String number = sharedPreferences.getString(KEY_DOCTOR_NUMBER, "");
 
         // Set the loaded data to input fields
         inputWeight.setText(weight);
         inputHeight.setText(height);
         inputAge.setText(age);
-        doctorNumber.setText(number); // Set the loaded doctor number
+        doctorNumber.setText(number);
 
         // Set the spinner to the correct gender
         setSpinnerToValue(inputGender, gender);
@@ -122,5 +148,19 @@ public class profile extends AppCompatActivity {
             // Show a message if the number is empty
             Toast.makeText(profile.this, "Enter a valid phone number", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void logout() {
+        // Update SharedPreferences to log the user out
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_IS_LOGGED_IN, false);
+        editor.remove(KEY_USERNAME); // Optionally clear username if no longer needed
+        editor.apply();
+
+        // Redirect to login activity
+        Intent intent = new Intent(profile.this, login.class);
+        startActivity(intent);
+        finish(); // Close profile activity
     }
 }

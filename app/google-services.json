@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "159191072720",
+    "project_id": "nibblesproject",
+    "storage_bucket": "nibblesproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159191072720:android:cdf32599a8b42ded0103d5",
+        "android_client_info": {
+          "package_name": "com.example.nibbles_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe0pJBXH5NsKpdpIWicQe3ctkLZYhk56g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

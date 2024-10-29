@@ -1,57 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AssessmentActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <LinearLayout
-        android:id="@+id/assessmentForm"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assessment"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How satisfied are you with the app?"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/satisfaction_input"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        >
+        android:layout_height="wrap_content"
+        android:hint="Enter your satisfaction level (1-10)" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enter Health Markers"
-            android:textSize="18sp"
-            android:padding="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What improvements would you like to see?"
+        android:textSize="18sp"
+        android:paddingTop="16dp" />
 
-        <EditText
-            android:id="@+id/nicotineInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nicotine Intake" />
+    <EditText
+        android:id="@+id/improvement_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your suggestions" />
 
-        <EditText
-            android:id="@+id/proteinInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Protein Intake (grams)"
-            tools:ignore="TouchTargetSizeCheck" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How do you feel about your progress?"
+        android:textSize="18sp"
+        android:paddingTop="16dp" />
 
-        <EditText
-            android:id="@+id/calorieInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Calorie Intake (kcal)" />
+    <EditText
+        android:id="@+id/progress_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your thoughts on progress" />
 
-        <EditText
-            android:id="@+id/waterInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Water Intake (glasses)" />
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="16dp" />
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
