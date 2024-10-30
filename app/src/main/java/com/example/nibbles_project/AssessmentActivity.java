@@ -1,5 +1,7 @@
 package com.example.nibbles_project;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,8 @@ public class AssessmentActivity extends AppCompatActivity {
     private EditText nicotineInput, proteinInput, calorieInput, waterInput;
     private Button saveButton;
     private AppDatabase db;
+    private static final String SHARED_PREFS = "userPrefs";
+    private static final String KEY_LAST_ASSESSMENT_DATE = "lastAssessmentDate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +32,12 @@ public class AssessmentActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "intake-database").build();
 
         saveButton.setOnClickListener(v -> saveData());
-
-        checkAssessmentInterval();
     }
-
-    private void checkAssessmentInterval() {
-        Calendar calendar = Calendar.getInstance();
-        int month = calendar.get(Calendar.MONTH) + 1; // Months are 0-based in Calendar
-
-        if (month % 3 == 0) {
-            findViewById(R.id.assessmentForm).setVisibility(TextView.VISIBLE);
-        } else {
-            findViewById(R.id.assessmentForm).setVisibility(TextView.GONE);
-        }
+    private void updateLastAssessmentDate() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(KEY_LAST_ASSESSMENT_DATE, Calendar.getInstance().getTimeInMillis());
+        editor.apply();
     }
 
     private void saveData() {
@@ -57,7 +54,10 @@ public class AssessmentActivity extends AppCompatActivity {
 
         new Thread(() -> {
             db.intakeDao().insert(intake);
-            runOnUiThread(() -> Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show());
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+                updateLastAssessmentDate();
+            });
         }).start();
     }
 }

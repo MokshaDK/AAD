@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String KEY_HEIGHT = "height";
 
     private static final String CHANNEL_ID = "channel_id";
+    private static final String KEY_LAST_ASSESSMENT_DATE = "lastAssessmentDate";
     private static final int NOTIFICATION_ID = 1;
 
     @Override
@@ -85,7 +86,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
         scheduleMidnightReset();
+        checkAssessmentInterval();
 
+    }
+    private void checkAssessmentInterval() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        long lastAssessmentDateMillis = sharedPreferences.getLong(KEY_LAST_ASSESSMENT_DATE, 0);
+
+        Calendar lastAssessmentDate = Calendar.getInstance();
+        lastAssessmentDate.setTimeInMillis(lastAssessmentDateMillis);
+
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.add(Calendar.MONTH, -3);
+
+        if (lastAssessmentDate.before(currentDate)) {
+            launchAssessmentActivity();
+        }
+    }
+
+    private void launchAssessmentActivity() {
+        Intent intent = new Intent(this, AssessmentActivity.class);
+        startActivity(intent);
     }
 
     private void initializeStepCounter() {
