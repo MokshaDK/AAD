@@ -8,6 +8,8 @@
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -19,11 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Nibbles_Project"
         tools:targetApi="31">
+        <receiver android:name=".ResetStepCounterReceiver" />
         <activity
             android:name=".VideosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NutritionVideos"
             android:exported="false" />
         <activity
             android:name=".profile"
@@ -37,7 +37,6 @@
         <activity
             android:name=".AssessmentActivity"
             android:exported="true" />
-        <activity android:name=".NutritionVideosActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

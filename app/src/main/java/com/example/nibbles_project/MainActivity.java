@@ -1,6 +1,8 @@
 package com.example.nibbles_project;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -18,7 +20,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import android.app.NotificationManager;
+import androidx.core.app.NotificationCompat;
 import android.content.Context;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private static final int REQUEST_CODE = 100;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Button nutritionGuidelinesButton;
     private int totalSteps = 0;
     private static final String SHARED_PREFS = "userPrefs";
+    private static final String KEY_STEP_COUNT = "stepCount";
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_HEIGHT = "height";
 
@@ -77,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(intent); // Start the profile activity
             }
         });
+        scheduleMidnightReset();
 
     }
 
@@ -90,18 +98,46 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             Toast.makeText(this, "Step counter sensor not available", Toast.LENGTH_SHORT).show();
         }
     }
+    private void sendNotification(String title, String message) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+    private void scheduleMidnightReset() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, ResetStepCounterReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        if (alarmManager != null) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        totalSteps = (int) event.values[0];  // Get the step count
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        int savedSteps = sharedPreferences.getInt(KEY_STEP_COUNT, 0);
+        int currentSteps = (int) event.values[0];
+        int totalSteps = currentSteps - savedSteps;
+
         stepCountText.setText("Steps: " + totalSteps);
-
-        // Set progress based on step count
         stepProgressBar.setProgress(totalSteps);
-
-        // Optionally, if you want a limit, make sure steps do not exceed the max
         if (totalSteps > stepProgressBar.getMax()) {
             stepProgressBar.setProgress(stepProgressBar.getMax());
+        }
+        if (totalSteps >= 10000) {
+            sendNotification("Congratulations!", "You've reached 10,000 steps today!");
         }
     }
 
