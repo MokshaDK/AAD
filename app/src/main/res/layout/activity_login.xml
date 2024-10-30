@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1F5FE"
     tools:context=".login">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:textSize="24sp"
+        android:textColor="#0D47A1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,31 +25,35 @@
         android:layout_width="0dp"
         android:minHeight="48dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:hint="Username"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="#0288D1"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/login_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_title" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
 
     <EditText
         android:id="@+id/password_input"
         android:layout_width="0dp"
         android:minHeight="48dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:hint="Password"
         android:inputType="textPassword"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="#0288D1"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/username_input"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/username_input" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Login"
+        android:backgroundTint="#1976D2"
+        android:textColor="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@id/password_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don't have an account? Sign up"
-        android:textColor="@color/purple_500"
+        android:textColor="#6A1B9A"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/login_button"
         app:layout_constraintStart_toStartOf="parent"

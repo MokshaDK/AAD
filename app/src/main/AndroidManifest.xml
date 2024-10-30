@@ -45,6 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <receiver android:name=".NotificationReceiver" android:exported="true"/>
 
+    </application>
 </manifest>

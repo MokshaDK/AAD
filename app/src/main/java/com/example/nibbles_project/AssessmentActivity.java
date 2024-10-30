@@ -1,5 +1,8 @@
 package com.example.nibbles_project;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import java.util.Calendar;
 
 
 public class AssessmentActivity extends AppCompatActivity {
@@ -30,6 +34,18 @@ public class AssessmentActivity extends AppCompatActivity {
                 submitAssessment();
             }
         });
+        checkAssessmentInterval();
+    }
+
+    private void checkAssessmentInterval() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1; // Months are 0-based in Calendar
+
+        /*if (month % 3 == 0) {
+            findViewById(R.id.assessmentForm).setVisibility(VISIBLE);
+        } else {
+            findViewById(R.id.assessmentForm).setVisibility(GONE);
+        }*/
     }
 
     private void submitAssessment() {

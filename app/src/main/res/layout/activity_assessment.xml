@@ -1,61 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:id="@+id/assessmentForm"
+    android:background="#FCE4EC">
 
     <TextView
+        android:id="@+id/assessment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Assessment"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:paddingBottom="16dp" />
+        android:textColor="#880E4F"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
 
     <TextView
+        android:id="@+id/satisfaction_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="How satisfied are you with the app?"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="#6A1B9A"
+        app:layout_constraintTop_toBottomOf="@id/assessment_title"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/satisfaction_input"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter your satisfaction level (1-10)" />
+        android:hint="Enter your satisfaction level (1-10)"
+        android:backgroundTint="#F57F20"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/satisfaction_question"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/improvement_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="What improvements would you like to see?"
         android:textSize="18sp"
-        android:paddingTop="16dp" />
+        android:textColor="#6A1B9A"
+        app:layout_constraintTop_toBottomOf="@id/satisfaction_input"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/improvement_input"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter your suggestions" />
+        android:hint="Enter your suggestions"
+        android:backgroundTint="#F57F20"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/improvement_question"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/progress_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="How do you feel about your progress?"
         android:textSize="18sp"
-        android:paddingTop="16dp" />
+        android:textColor="#6A1B9A"
+        app:layout_constraintTop_toBottomOf="@id/improvement_input"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/progress_input"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter your thoughts on progress" />
+        android:hint="Enter your thoughts on progress"
+        android:backgroundTint="#F57F20"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/progress_question"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/submit_button"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Submit"
+        android:backgroundTint="#1976D2"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/progress_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

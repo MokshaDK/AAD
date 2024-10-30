@@ -3,18 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#E1F5FE">
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Videos by Nutrition Experts"
         android:textSize="24sp"
+        android:textColor="#0D47A1"
         android:textStyle="bold"
         android:paddingBottom="16dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_videos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"/>
+
 </LinearLayout>

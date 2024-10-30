@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1F5FE"
     tools:context=".signup">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:textSize="24sp"
+        android:textColor="#0D47A1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,8 +23,11 @@
     <EditText
         android:id="@+id/name_input"
         android:layout_width="0dp"
+        android:minHeight="48dp"
         android:layout_height="wrap_content"
         android:hint="Name"
+        android:backgroundTint="#0288D1"
+        android:textColor="#000000"
         app:layout_constraintTop_toBottomOf="@id/signup_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,9 +36,12 @@
     <EditText
         android:id="@+id/password_input_signup"
         android:layout_width="0dp"
+        android:minHeight="48dp"
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
+        android:backgroundTint="#0288D1"
+        android:textColor="#000000"
         app:layout_constraintTop_toBottomOf="@id/name_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,9 +52,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Sign Up"
+        android:backgroundTint="#1976D2"
+        android:textColor="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@id/password_input_signup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>
+
+    <TextView
+        android:id="@+id/login_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Log in"
+        android:textColor="#6A1B9A"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/signup_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
