@@ -1,4 +1,5 @@
 package com.example.nibbles_project;
+
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +41,13 @@ public class signup extends AppCompatActivity {
         db = FirebaseFirestore.getInstance(); // Initialize Firestore
         createNotificationChannel(); // Create the notification channel
 
+        // Request notification permission for Android 13+ if not granted
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+        }
+
         // On signup button click, save user data in Firestore and navigate to login
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +76,11 @@ public class signup extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(signup.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
 
-                    // Set up notification
-                    String channelId = "your_channel_id"; // Use the channel ID you created earlier
-                    Intent intent = new Intent(signup.this, login.class); // Change to the desired activity
+                    // Set up notification with correct channel ID
+                    Intent intent = new Intent(signup.this, login.class); // Redirect to login after signup
                     PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_launcher) // Use your notification icon
                             .setContentTitle("Welcome!")
                             .setContentText("Thank you for signing up!")
@@ -80,19 +88,12 @@ public class signup extends AppCompatActivity {
                             .setContentIntent(pendingIntent)
                             .setAutoCancel(true); // Automatically remove the notification when clicked
 
-                    // Check for notification permission before sending the notification
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // API 33 and above
-                        if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                            notificationManager.notify(1001, builder.build());
-                        } else {
-                            // Handle the case where permission is not granted
-                            Toast.makeText(this, "Notification permission is required", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        // For API levels below 33, send the notification directly
+                    // Send the notification if permission is granted
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU || checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
                         notificationManager.notify(1001, builder.build());
+                    } else {
+                        Toast.makeText(this, "Notification permission is required", Toast.LENGTH_SHORT).show();
                     }
 
                     // Navigate to login screen after signup

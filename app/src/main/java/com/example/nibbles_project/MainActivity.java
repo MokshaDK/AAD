@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private static final String SHARED_PREFS = "NibblesPrefs";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
-    private static final String KEY_USERNAME = "username"; // Added for storing the username
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_LAST_ASSESSMENT_DATE = "lastAssessmentDate";// Added for storing the username
 
     private SQLiteDatabaseHelper databaseHelper;
 
@@ -105,6 +107,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(intent); // Start the profile activity
             }
         });
+        checkAssessmentInterval();
+    }
+    private void checkAssessmentInterval() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        long lastAssessmentDateMillis = sharedPreferences.getLong(KEY_LAST_ASSESSMENT_DATE, 0);
+        Calendar lastAssessmentDate = Calendar.getInstance();
+        lastAssessmentDate.setTimeInMillis(lastAssessmentDateMillis);
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.add(Calendar.MONTH, -3);
+        if (lastAssessmentDate.before(currentDate)) {
+            launchAssessmentActivity();
+        }
+    }
+    private void launchAssessmentActivity() {
+        Intent intent = new Intent(this, AssessmentActivity.class);
+        startActivity(intent);
     }
 
     private void initializeStepCounter() {
