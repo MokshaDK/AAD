@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
     private void checkAssessmentInterval() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        long lastAssessmentDateMillis = sharedPreferences.getLong(KEY_LAST_ASSESSMENT_DATE, 0);
+        long lastAssessmentDateMillis = sharedPreferences.getLong(KEY_LAST_ASSESSMENT_DATE, System.currentTimeMillis());
         Calendar lastAssessmentDate = Calendar.getInstance();
         lastAssessmentDate.setTimeInMillis(lastAssessmentDateMillis);
         Calendar currentDate = Calendar.getInstance();
